@@ -390,23 +390,23 @@ let activeCityKey = "johannesburg";
 // 2. DOM Node Cache Selector Loader
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
-  
+
   // Outer Screens
   const screenWelcome = document.getElementById("welcome-screen");
   const screenApp = document.getElementById("app-container");
-  
+
   // Navigation trigger
   const btnGetStarted = document.getElementById("btn-get-started");
-  
+
   // Sub-views
   const subWeatherDashboard = document.getElementById("view-weather-dashboard");
   const subWeatherMap = document.getElementById("view-weather-map");
   const subWeatherDetail = document.getElementById("view-weather-detail");
   const subFitGuide = document.getElementById("view-fit-guide");
   const subExitLoggedOut = document.getElementById("view-exit-logged-out");
-  
+
   const allSubViews = [subWeatherDashboard, subWeatherMap, subWeatherDetail, subFitGuide, subExitLoggedOut];
-  
+
   // Nav buttons
   const navWeather = document.getElementById("nav-weather");
   const navMap = document.getElementById("nav-map");
@@ -419,13 +419,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const zoomInBtn = document.getElementById("map-zoom-in");
   const zoomOutBtn = document.getElementById("map-zoom-out");
   const centerBtn = document.getElementById("map-center-arrow");
-  
+
   // Map badges / list rows
   const badgeProtea = document.getElementById("badge-city-protea");
   const badgeDobsen = document.getElementById("badge-city-dobsen");
   const badgeDiepkloof = document.getElementById("badge-city-diepkloof");
   const badgeOrlando = document.getElementById("badge-city-orlando");
-  
+
   const feedProtea = document.getElementById("feed-protea");
   const feedDobsen = document.getElementById("feed-dobsen");
   const feedOrlando = document.getElementById("feed-orlando");
@@ -454,7 +454,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==========================================================================
   // 3. Screen Switching & Tab View Routing Engine
   // ==========================================================================
-  
+
   // Welcome page button "Get Started"
   if (btnGetStarted) {
     btnGetStarted.addEventListener("click", () => {
@@ -576,7 +576,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (textDbTemp) textDbTemp.textContent = data.temp;
     if (textDbCondition) textDbCondition.textContent = data.condition;
     if (textDbFeels) textDbFeels.textContent = `Feels like ${data.feelsLike}°C`;
-    
+
     if (textAdvWear) textAdvWear.textContent = data.advice.wear;
     if (textAdvSafety) textAdvSafety.textContent = data.advice.safety;
     if (textAdvActivity) textAdvActivity.textContent = data.advice.activity;
@@ -635,7 +635,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const detailIconArt = document.getElementById("detail-icon-art");
     const hourlyReel = document.getElementById("hourly-reel-container");
     const forecastTableBody = document.getElementById("forecast-table-body");
-    
+
     // Air Conditions metrics
     const condRealFeel = document.getElementById("cond-realfeel-val");
     const condWind = document.getElementById("cond-wind-val");
@@ -645,7 +645,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (detailName) detailName.textContent = data.name.split(",")[0];
     if (detailRainChance) detailRainChance.textContent = `Chance of rain: ${data.rainChance}%`;
     if (detailTempVal) detailTempVal.textContent = data.temp;
-    
+
     if (condRealFeel) condRealFeel.textContent = `${data.feelsLike}°`;
     if (condWind) condWind.textContent = data.wind;
     if (condRain) condRain.textContent = `${data.rainChance}%`;
@@ -763,7 +763,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const fitBadgeTemp = document.getElementById("fit-current-badge-temp");
     const fitBadgeDesc = document.getElementById("fit-current-badge-desc");
     const wearOutfitDesc = document.getElementById("planner-outfit-desc");
-    
+
     const avatarTorso = document.getElementById("dynamic-avatar-torso");
     const avatarLegs = document.getElementById("dynamic-avatar-legs");
     const avatarAcc = document.getElementById("dynamic-avatar-acc");
@@ -792,7 +792,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Modify progress gauge sizes and readings
     if (uvMeterLabel) uvMeterLabel.textContent = data.advice.uvMeterLabel;
     if (uvMeterBar) uvMeterBar.style.width = `${data.advice.uvPercent}%`;
-    
+
     if (hydrationLabel) hydrationLabel.textContent = data.advice.hydrationLabel;
     if (hydrationBar) hydrationBar.style.width = `${data.advice.hydrationPercent}%`;
 
@@ -835,7 +835,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==========================================================================
   // 5. Interactive SVG Map of South Africa logic (Page 3)
   // ==========================================================================
-  
+
   // HUD interactive scaling handlers
   if (zoomInBtn) {
     zoomInBtn.addEventListener("click", () => {
@@ -898,7 +898,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (badgeOrlando) badgeOrlando.classList.add("active-badge");
       if (feedOrlando) feedOrlando.classList.add("active-feed");
     }
-    
+
     // Zoom/pan highlight to map coordinates slightly depending on selection
     if (mapSvg) {
       let zoomCoords = "scale(1.25) ";
@@ -907,7 +907,7 @@ document.addEventListener("DOMContentLoaded", () => {
       else if (cityId === "diepkloof") zoomCoords += "translate(30px, -40px)";
       else if (cityId === "orlando") zoomCoords += "translate(-30px, -10px)";
       else zoomCoords = "scale(1)";
-      
+
       mapSvg.style.transform = zoomCoords;
       mapScale = 1.25; // update tracker
     }
@@ -945,7 +945,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (matchedKey) {
       activeCityKey = matchedKey;
       syncAllActiveCityData();
-      
+
       // If of regional South Africa cities, route to map or highlight
       if (["proteaglen", "dobsenville", "diepkloof", "orlando"].includes(matchedKey)) {
         switchSubView("weather-map");
@@ -963,7 +963,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const generatedTemp = Math.floor(Math.random() * 26) + 10; // 10°C to 36°C
       const generatedRainChance = Math.floor(Math.random() * 95);
       const conditionSet = generatedRainChance > 70 ? "Heavy Rain" : generatedRainChance > 40 ? "Cloudy" : "Sunny";
-      
+
       const newCustomCity = {
         name: `${formattedCityName}, Global`,
         temp: generatedTemp,
@@ -997,10 +997,10 @@ document.addEventListener("DOMContentLoaded", () => {
           shirtColor: generatedTemp < 18 ? "#3B82F6" : "#F97316",
           legColor: "#1E293B",
           hasCap: generatedTemp > 22,
-          uvMeterLabel: `Index (${Math.min(generatedTemp/4, 10).toFixed(0)})`,
-          uvPercent: Math.min((generatedTemp/35)*100, 100),
+          uvMeterLabel: `Index (${Math.min(generatedTemp / 4, 10).toFixed(0)})`,
+          uvPercent: Math.min((generatedTemp / 35) * 100, 100),
           hydrationLabel: generatedTemp > 24 ? "High Risk" : "Normal Comfort",
-          hydrationPercent: Math.min((generatedTemp/35)*100, 100),
+          hydrationPercent: Math.min((generatedTemp / 35) * 100, 100),
           thermalLabel: "Adaptive Thermal Level",
           thermalPercent: 50,
           checklist: [
@@ -1016,7 +1016,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const lowerInputKey = formattedCityName.toLowerCase();
       CITIES_DATABASE[lowerInputKey] = newCustomCity;
       activeCityKey = lowerInputKey;
-      
+
       syncAllActiveCityData();
       switchSubView("weather-detail");
       triggerNavHighlight("weather");
@@ -1066,7 +1066,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const toast = document.createElement("div");
     toast.className = "sat-toast animated-entrance";
     toast.textContent = message;
-    
+
     // Inject temporary styles on toast
     Object.assign(toast.style, {
       position: "fixed",
@@ -1113,3 +1113,36 @@ document.addEventListener("DOMContentLoaded", () => {
   // Start with default city loaded
   syncAllActiveCityData();
 });
+
+// Javscript Api for dynamic weather dashboard application
+
+// Replace with your actual OpenWeather API key
+const API_KEY = 'e60557cce7cbeb9ef373ce5a55b052fb';
+const CITY = 'Johannesburg';
+
+async function fetchWeather() {
+  // Construct the URL with city name and your API key
+  const url = `https://openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API_KEY}&units=metric`;
+
+  try {
+    const response = await fetch(url);
+
+    // Check if the HTTP request was successful
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    // Log helpful weather details to the console
+    console.log(`Weather in ${data.name}:`);
+    console.log(`Temperature: ${data.main.temp}°C`);
+    console.log(`Condition: ${data.weather[0].description}`);
+
+  } catch (error) {
+    console.error("Failed to fetch weather data:", error.message);
+  }
+}
+
+// Execute the function
+fetchWeather();

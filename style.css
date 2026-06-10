@@ -1,7 +1,3 @@
-/* ==========================================================================
-   CSS CUSTOM STYLING - FORECAST WEATHER APP
-   ========================================================================== */
-
 /* 1. Reset and Theme Constants */
 :root {
   /* Brand color palette */
@@ -12,11 +8,11 @@
   --accent-green: #00E659;
   --accent-green-hover: #00FF66;
   --accent-green-translucent: rgba(0, 230, 89, 0.15);
-  
+
   --text-white: #FFFFFF;
   --text-gray: #8F90A6;
   --text-muted: #555770;
-  
+
   --blue-glow: #00C2FF;
   --blue-solid: #2466FF;
   --yellow-glow: #FFD000;
@@ -56,13 +52,16 @@ body {
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--card-bg);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
@@ -88,48 +87,102 @@ button {
    ========================================================================== */
 
 @keyframes rotateSun {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes pulseGlow {
-  0%, 100% { opacity: 0.85; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.05); }
+
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
 }
 
 @keyframes floatCloud {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-8px) scale(0.99); }
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-8px) scale(0.99);
+  }
 }
 
 @keyframes rainFall {
-  0% { transform: translateY(-20px) skewX(-15deg); opacity: 0; }
-  35% { opacity: 1; }
-  85% { opacity: 1; }
-  100% { transform: translateY(40px) skewX(-15deg); opacity: 0; }
+  0% {
+    transform: translateY(-20px) skewX(-15deg);
+    opacity: 0;
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(40px) skewX(-15deg);
+    opacity: 0;
+  }
 }
 
 @keyframes windSlide {
-  0% { transform: translateX(-15px); opacity: 0; }
-  50% { opacity: 0.8; }
-  100% { transform: translateX(25px); opacity: 0; }
+  0% {
+    transform: translateX(-15px);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translateX(25px);
+    opacity: 0;
+  }
 }
 
 @keyframes bounceSlow {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
 }
 
 /* ANIMATION UTILITY CLASSES */
 .sun-spin-slow {
   animation: rotateSun 40s linear infinite;
 }
+
 .sun-glow-pulse {
   animation: pulseGlow 4s ease-in-out infinite;
 }
+
 .active-float {
   animation: floatCloud 6s ease-in-out infinite;
 }
+
 .active-bounce {
   animation: bounceSlow 3s ease-in-out infinite;
 }
@@ -201,7 +254,7 @@ button {
   height: 110px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--yellow-glow) 10%, var(--orange-solid) 90%);
-  box-shadow: 0 0 40px rgba(255, 136, 0, 0.5), inset -5px -5px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 0 40px rgba(255, 136, 0, 0.5), inset -5px -5px 15px rgba(0, 0, 0, 0.15);
   top: 30px;
   right: 30px;
   z-index: 2;
@@ -215,18 +268,42 @@ button {
   height: 22px;
   border-radius: 4px;
   left: calc(50% - 4px);
-  transform-origin: 4px 55px; /* offset for rotating outside the sphere */
+  transform-origin: 4px 55px;
+  /* offset for rotating outside the sphere */
 }
 
 /* Position rays around 360 degrees */
-.sun-ray.r1 { transform: rotate(0deg) translateY(-28px); }
-.sun-ray.r2 { transform: rotate(45deg) translateY(-28px); }
-.sun-ray.r3 { transform: rotate(90deg) translateY(-28px); }
-.sun-ray.r4 { transform: rotate(135deg) translateY(-28px); }
-.sun-ray.r5 { transform: rotate(180deg) translateY(-28px); }
-.sun-ray.r6 { transform: rotate(225deg) translateY(-28px); }
-.sun-ray.r7 { transform: rotate(270deg) translateY(-28px); }
-.sun-ray.r8 { transform: rotate(315deg) translateY(-28px); }
+.sun-ray.r1 {
+  transform: rotate(0deg) translateY(-28px);
+}
+
+.sun-ray.r2 {
+  transform: rotate(45deg) translateY(-28px);
+}
+
+.sun-ray.r3 {
+  transform: rotate(90deg) translateY(-28px);
+}
+
+.sun-ray.r4 {
+  transform: rotate(135deg) translateY(-28px);
+}
+
+.sun-ray.r5 {
+  transform: rotate(180deg) translateY(-28px);
+}
+
+.sun-ray.r6 {
+  transform: rotate(225deg) translateY(-28px);
+}
+
+.sun-ray.r7 {
+  transform: rotate(270deg) translateY(-28px);
+}
+
+.sun-ray.r8 {
+  transform: rotate(315deg) translateY(-28px);
+}
 
 /* Dimensional Fluffy Cloud using overlapping circles and soft shadow */
 .volume-cloud {
@@ -275,7 +352,7 @@ button {
   position: absolute;
   width: 190px;
   height: 35px;
-  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.06));
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.06));
   bottom: 5px;
   left: 25px;
   border-radius: 20px;
@@ -286,9 +363,11 @@ button {
 .volume-cloud.dark-atmosphere .cloud-puff {
   background: linear-gradient(135deg, #E8EAED 10%, #7F8C9A 100%);
 }
+
 .volume-cloud.dark-atmosphere .active-puff-1 {
   background: linear-gradient(135deg, #CFD4DB 0%, #637180 90%);
 }
+
 .volume-cloud.dark-atmosphere .active-puff-3 {
   background: linear-gradient(135deg, #DFE2E6 0%, #718090 100%);
 }
@@ -316,9 +395,20 @@ button {
   box-shadow: 0 0 10px rgba(0, 194, 255, 0.4);
 }
 
-.rain-drop.d1 { animation: rainFall 2.2s infinite; animation-delay: 0.2s; }
-.rain-drop.d2 { animation: rainFall 2.2s infinite; animation-delay: 0.9s; }
-.rain-drop.d3 { animation: rainFall 2.2s infinite; animation-delay: 1.6s; }
+.rain-drop.d1 {
+  animation: rainFall 2.2s infinite;
+  animation-delay: 0.2s;
+}
+
+.rain-drop.d2 {
+  animation: rainFall 2.2s infinite;
+  animation-delay: 0.9s;
+}
+
+.rain-drop.d3 {
+  animation: rainFall 2.2s infinite;
+  animation-delay: 1.6s;
+}
 
 /* Welcome text & CTA Button Panel */
 .welcome-content-box {
@@ -339,9 +429,9 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: inset 0 2px 4px rgba(255,255,255,0.05), var(--shadow-glow);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.05), var(--shadow-glow);
   margin-bottom: 2.5rem;
-  border: 1px solid rgba(255,255,255,0.03);
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .wind-logo-svg {
@@ -427,7 +517,7 @@ button {
   border-radius: 40px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   padding: 2.5rem 0;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
   position: sticky;
   top: 1.5rem;
   height: calc(100vh - 3rem);
@@ -499,7 +589,7 @@ button {
 }
 
 .nav-item:hover .nav-icon-box {
-  background-color: rgba(255,255,255,0.04);
+  background-color: rgba(255, 255, 255, 0.04);
   transform: scale(1.05);
 }
 
@@ -539,21 +629,31 @@ button {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Floating interactive classes */
 .hover-translate {
   transition: var(--transition-smooth);
 }
+
 .hover-translate:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
 }
+
 .hover-scale {
   transition: var(--transition-smooth);
 }
+
 .hover-scale:hover {
   transform: scale(1.03);
 }
@@ -585,7 +685,7 @@ button {
   background-color: var(--card-bg);
   padding: 0.75rem 1.5rem;
   border-radius: var(--border-radius-lg);
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   box-shadow: var(--shadow-glow);
   cursor: pointer;
   transition: var(--transition-smooth);
@@ -609,7 +709,7 @@ button {
 
 .green-icon {
   color: var(--accent-green);
-  filter: drop-shadow(0 0 4px rgba(0,230,89,0.3));
+  filter: drop-shadow(0 0 4px rgba(0, 230, 89, 0.3));
 }
 
 .location-name-text {
@@ -623,12 +723,14 @@ button {
   display: flex;
   align-items: center;
   padding-left: 0.5rem;
-  border-left: 1px solid rgba(255,255,255,0.1);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
   margin-left: 0.5rem;
 }
 
 /* Beautiful Search Bar Input */
-.dashboard-search, .map-search-bar, .detailed-search-bar {
+.dashboard-search,
+.map-search-bar,
+.detailed-search-bar {
   flex: 1;
   max-width: 500px;
   display: flex;
@@ -636,7 +738,7 @@ button {
   background-color: var(--card-bg);
   border-radius: var(--border-radius-lg);
   padding: 0.35rem 0.5rem 0.35rem 1.5rem;
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   position: relative;
 }
 
@@ -664,7 +766,7 @@ button {
 .search-execution-btn {
   background-color: var(--card-header-bg);
   color: var(--accent-green);
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   font-size: 0.85rem;
   font-weight: 600;
   padding: 0.5rem 1.25rem;
@@ -693,7 +795,7 @@ button {
   justify-content: center;
   align-items: center;
   padding: 5rem 2rem;
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   min-height: 480px;
   position: relative;
   overflow: hidden;
@@ -742,7 +844,7 @@ button {
   background-color: var(--card-bg);
   border-radius: var(--border-radius-lg);
   padding: 2.25rem;
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   position: relative;
 }
 
@@ -813,7 +915,7 @@ button {
   background-color: var(--card-bg);
   border-radius: var(--border-radius-lg);
   padding: 2.25rem;
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .advice-segment-title {
@@ -838,7 +940,7 @@ button {
   background-color: rgba(255, 255, 255, 0.03);
   padding: 1.15rem 1.5rem;
   border-radius: var(--border-radius-md);
-  border: 1px solid rgba(255,255,255,0.03);
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .advice-icon-sphere {
@@ -860,7 +962,7 @@ button {
   width: 22px;
   height: 22px;
   color: var(--accent-green);
-  filter: drop-shadow(0 0 5px rgba(0,230,89,0.3));
+  filter: drop-shadow(0 0 5px rgba(0, 230, 89, 0.3));
 }
 
 .advice-body {
@@ -904,7 +1006,7 @@ button {
 
 .map-active-info-pill {
   background-color: var(--card-bg);
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   padding: 0.65rem 1.25rem;
   border-radius: var(--border-radius-lg);
   font-family: var(--font-mono);
@@ -923,7 +1025,7 @@ button {
 .map-visualizer-card {
   background-color: var(--card-bg);
   border-radius: var(--border-radius-lg);
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   padding: 1rem;
   position: relative;
   min-height: 480px;
@@ -948,7 +1050,7 @@ button {
 }
 
 .map-provincial-region:hover {
-  filter: brightness(1.2) drop-shadow(0 0 10px rgba(0,0,0,0.5));
+  filter: brightness(1.2) drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
 }
 
 .active-province {
@@ -967,7 +1069,7 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
   cursor: pointer;
   z-index: 20;
   backdrop-filter: blur(4px);
@@ -1002,7 +1104,7 @@ button {
 
 .yellow-sun-icon {
   color: var(--yellow-glow);
-  filter: drop-shadow(0 0 4px rgba(255,208,0,0.4));
+  filter: drop-shadow(0 0 4px rgba(255, 208, 0, 0.4));
 }
 
 .grey-cloud-icon {
@@ -1028,10 +1130,25 @@ button {
 }
 
 /* Positioning badges based on regional SA coordinates */
-.badge-protea { top: 40%; left: 52%; }
-.badge-dobsen { top: 30%; left: 45%; }
-.badge-diepkloof { top: 58%; left: 42%; }
-.badge-orlando { top: 52%; left: 57%; }
+.badge-protea {
+  top: 40%;
+  left: 52%;
+}
+
+.badge-dobsen {
+  top: 30%;
+  left: 45%;
+}
+
+.badge-diepkloof {
+  top: 58%;
+  left: 42%;
+}
+
+.badge-orlando {
+  top: 52%;
+  left: 57%;
+}
 
 /* HUD zoom icons overlaid on the Map */
 .map-nav-controllers {
@@ -1042,7 +1159,7 @@ button {
   flex-direction: column;
   background-color: var(--bg-primary);
   border-radius: var(--border-radius-sm);
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: var(--shadow-glow);
   overflow: hidden;
   z-index: 25;
@@ -1067,7 +1184,7 @@ button {
 
 .hud-divider {
   height: 1px;
-  background-color: rgba(255,255,255,0.08);
+  background-color: rgba(255, 255, 255, 0.08);
   width: 80%;
   margin: 0 auto;
 }
@@ -1090,7 +1207,7 @@ button {
 .map-city-list-card {
   background-color: var(--card-bg);
   border-radius: var(--border-radius-lg);
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   padding: 2.25rem;
 }
 
@@ -1115,14 +1232,14 @@ button {
   background-color: rgba(255, 255, 255, 0.03);
   padding: 1.25rem 1.5rem;
   border-radius: var(--border-radius-md);
-  border: 1px solid rgba(255,255,255,0.03);
+  border: 1px solid rgba(255, 255, 255, 0.03);
   cursor: pointer;
   transition: var(--transition-smooth);
 }
 
 .city-feed-row:hover {
   background-color: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255,255,255,0.1);
+  border-color: rgba(255, 255, 255, 0.1);
   transform: translateX(3px);
 }
 
@@ -1172,7 +1289,7 @@ button {
 
 .city-feed-row.active-feed .node-temp-summary {
   color: var(--accent-green);
-  text-shadow: 0 0 10px rgba(0,230,89,0.25);
+  text-shadow: 0 0 10px rgba(0, 230, 89, 0.25);
 }
 
 /* ==========================================================================
@@ -1199,7 +1316,7 @@ button {
   align-items: center;
   gap: 0.75rem;
   background-color: var(--card-bg);
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   padding: 0.7rem 1.4rem;
   border-radius: var(--border-radius-lg);
   font-family: var(--font-display);
@@ -1231,14 +1348,14 @@ button {
 .city-highlight-hero {
   background-color: var(--bg-dark-gray);
   border-radius: var(--border-radius-lg);
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   padding: 3.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 2px 5px rgba(255,255,255,0.02);
+  box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.02);
 }
 
 .highlight-info {
@@ -1302,7 +1419,7 @@ button {
   background-color: var(--card-bg);
   border-radius: var(--border-radius-lg);
   padding: 2.25rem;
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   overflow: hidden;
 }
 
@@ -1339,7 +1456,7 @@ button {
 }
 
 .hour-capsule:hover {
-  border-color: rgba(255,255,255,0.08);
+  border-color: rgba(255, 255, 255, 0.08);
   background-color: rgba(255, 255, 255, 0.05);
 }
 
@@ -1402,7 +1519,7 @@ button {
   background-color: var(--card-bg);
   border-radius: var(--border-radius-lg);
   padding: 2.25rem;
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .air-header {
@@ -1480,7 +1597,7 @@ button {
 .forecast-seven-day {
   background-color: var(--card-bg);
   border-radius: var(--border-radius-lg);
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   padding: 2.25rem;
   display: flex;
   flex-direction: column;
@@ -1505,7 +1622,7 @@ button {
   grid-template-columns: 100px 1.2fr 80px;
   align-items: center;
   padding: 1rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .forecast-table-row:last-child {
@@ -1605,7 +1722,7 @@ button {
 
 .weather-current-badge {
   background-color: var(--card-bg);
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: var(--border-radius-lg);
   padding: 0.75rem 1.5rem;
   display: flex;
@@ -1629,7 +1746,7 @@ button {
   background-color: var(--card-bg);
   border-radius: var(--border-radius-lg);
   padding: 2.25rem;
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   display: flex;
   flex-direction: column;
 }
@@ -1653,7 +1770,7 @@ button {
   justify-content: center;
   align-items: center;
   padding: 1rem;
-  border: 1px solid rgba(255,255,255,0.02);
+  border: 1px solid rgba(255, 255, 255, 0.02);
 }
 
 .clothing-avatar-doll {
@@ -1671,17 +1788,18 @@ button {
   background-color: #E6B594;
   border-radius: 50%;
   margin-bottom: 6px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   transition: var(--transition-smooth);
 }
 
 .avatar-torso {
   width: 70px;
   height: 75px;
-  background-color: #00E659; /* Dynamic color based on shirt recommendation */
+  background-color: #00E659;
+  /* Dynamic color based on shirt recommendation */
   border-radius: var(--border-radius-sm);
   position: relative;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   transition: var(--transition-smooth);
 }
 
@@ -1700,10 +1818,11 @@ button {
 .avatar-legs {
   width: 55px;
   height: 60px;
-  background-color: #33333E; /* Dynamic color */
+  background-color: #33333E;
+  /* Dynamic color */
   border-radius: 4px;
   margin-top: 2px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2) ;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: var(--transition-smooth);
 }
 
@@ -1714,8 +1833,9 @@ button {
   height: 10px;
   background-color: #FFC000;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.25);
-  display: none; /* Block when raining/sunny cap is needed */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  display: none;
+  /* Block when raining/sunny cap is needed */
   transition: var(--transition-smooth);
 }
 
@@ -1760,14 +1880,25 @@ button {
   border-radius: 6px;
 }
 
-.meter-badge.bg-orange { background-color: rgba(255,136,0,0.15); color: var(--orange-solid); }
-.meter-badge.bg-blue { background-color: rgba(36,102,255,0.15); color: #0077FF; }
-.meter-badge.bg-green { background-color: var(--accent-green-translucent); color: var(--accent-green); }
+.meter-badge.bg-orange {
+  background-color: rgba(255, 136, 0, 0.15);
+  color: var(--orange-solid);
+}
+
+.meter-badge.bg-blue {
+  background-color: rgba(36, 102, 255, 0.15);
+  color: #0077FF;
+}
+
+.meter-badge.bg-green {
+  background-color: var(--accent-green-translucent);
+  color: var(--accent-green);
+}
 
 .gauge-bar-bg {
   width: 100%;
   height: 8px;
-  background-color: rgba(255,255,255,0.04);
+  background-color: rgba(255, 255, 255, 0.04);
   border-radius: 4px;
   overflow: hidden;
 }
@@ -1778,9 +1909,17 @@ button {
   transition: width 0.75s ease-out;
 }
 
-.fill-orange { background-color: var(--orange-solid); }
-.fill-blue { background-color: var(--blue-solid); }
-.fill-green { background-color: var(--accent-green); }
+.fill-orange {
+  background-color: var(--orange-solid);
+}
+
+.fill-blue {
+  background-color: var(--blue-solid);
+}
+
+.fill-green {
+  background-color: var(--accent-green);
+}
 
 /* Fitness exercises checklists */
 .activities-checklist-ul {
@@ -1881,13 +2020,14 @@ button {
   background-color: #FFFFFF;
   transform-origin: left center;
   transform: rotateY(-50deg);
-  box-shadow: -10px 5px 20px rgba(0,0,0,0.6);
-  border-right: 2px solid rgba(0,0,0,0.15);
+  box-shadow: -10px 5px 20px rgba(0, 0, 0, 0.6);
+  border-right: 2px solid rgba(0, 0, 0, 0.15);
   transition: transform 0.8s ease-out;
 }
 
 .door-open-panel:hover {
-  transform: rotateY(-30deg); /* interactive hinge swing */
+  transform: rotateY(-30deg);
+  /* interactive hinge swing */
 }
 
 .door-knob {
@@ -1921,14 +2061,14 @@ button {
   align-items: center;
   box-shadow: var(--shadow-glow);
   margin-bottom: 2rem;
-  border: 1px solid rgba(255,255,255,0.03);
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .door-logout-icon {
   width: 50%;
   height: 50%;
   color: var(--accent-green);
-  filter: drop-shadow(0 0 10px rgba(0,230,89,0.3));
+  filter: drop-shadow(0 0 10px rgba(0, 230, 89, 0.3));
 }
 
 .exit-title-text {
@@ -1957,7 +2097,7 @@ button {
 
 .return-home-anchor:hover {
   color: var(--accent-green);
-  text-shadow: 0 0 4px rgba(0,230,89,0.15);
+  text-shadow: 0 0 4px rgba(0, 230, 89, 0.15);
 }
 
 /* ==========================================================================
@@ -1970,27 +2110,35 @@ button {
     max-width: 750px;
     grid-template-columns: 1fr;
   }
+
   .welcome-illustration-box {
     min-height: 380px;
   }
+
   .welcome-content-box {
     padding: 3.5rem 2.5rem;
   }
+
   .weather-content-split {
     grid-template-columns: 1fr;
   }
+
   .map-layout-split {
     grid-template-columns: 1fr;
   }
+
   .forecast-layout-split {
     grid-template-columns: 100%;
   }
+
   .fit-bento-layout {
     grid-template-columns: 1fr;
   }
+
   .exit-layout-grid {
     grid-template-columns: 1fr;
   }
+
   .door-illustration-box {
     margin: 3rem auto 0;
   }
@@ -2000,7 +2148,8 @@ button {
 @media screen and (max-width: 768px) {
   .app-layout {
     grid-template-columns: 1fr;
-    padding: 1rem 1rem 6.5rem; /* leave space for bottom navbar */
+    padding: 1rem 1rem 6.5rem;
+    /* leave space for bottom navbar */
   }
 
   /* Sticky Bottom Navigation capsule on mobile */
@@ -2020,7 +2169,8 @@ button {
   }
 
   .sidebar-logo-container {
-    display: none; /* hide app icon in navigation row */
+    display: none;
+    /* hide app icon in navigation row */
   }
 
   .sidebar-menu {
@@ -2048,9 +2198,10 @@ button {
   }
 
   .nav-item.active::before {
-    display: none; /* remove sidebar line decoration */
+    display: none;
+    /* remove sidebar line decoration */
   }
-  
+
   /* Create bottom active dot */
   .nav-item.active::after {
     content: '';
@@ -2073,7 +2224,9 @@ button {
     justify-content: space-between;
   }
 
-  .dashboard-search, .map-search-bar, .detailed-search-bar {
+  .dashboard-search,
+  .map-search-bar,
+  .detailed-search-bar {
     max-width: 100%;
   }
 
@@ -2088,27 +2241,42 @@ button {
   .exit-title-text {
     font-size: 2rem;
   }
-  
+
   /* Provincial floating badges spacing adjustments */
   .spot-badge {
     padding: 0.35rem 0.65rem;
     gap: 0.5rem;
   }
-  
+
   /* Map layout styling */
   .south-africa-map-svg {
     max-height: 380px;
   }
-  
+
   /* Hide provincial labels that overflow */
   text {
     font-size: 10px !important;
   }
-  
-  .badge-protea { top: 38%; left: 48%; }
-  .badge-dobsen { top: 25%; left: 38%; }
-  .badge-diepkloof { top: 62%; left: 32%; }
-  .badge-orlando { top: 52%; left: 56%; }
+
+  .badge-protea {
+    top: 38%;
+    left: 48%;
+  }
+
+  .badge-dobsen {
+    top: 25%;
+    left: 38%;
+  }
+
+  .badge-diepkloof {
+    top: 62%;
+    left: 32%;
+  }
+
+  .badge-orlando {
+    top: 52%;
+    left: 56%;
+  }
 
   .city-highlight-hero {
     padding: 2rem;
