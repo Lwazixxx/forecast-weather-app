@@ -1,0 +1,6 @@
+{
+  "name": "Forecast Weather App",
+  "description": "A responsive weather application built with vanilla HTML, CSS, and JavaScript featuring forecasts, maps, and fit advice.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

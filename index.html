@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forecast Weather App</title>
+  <!-- Link our custom style sheet -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Screen 1: Welcome / Landing Page -->
+  <div id="welcome-screen" class="screen">
+    <div class="welcome-container" id="welcome-card">
+      
+      <!-- Left Column: Big 3D Meteorology Illustration -->
+      <div class="welcome-illustration-box" id="3d-weather-illustration">
+        <div class="scenic-illustration">
+          <!-- 3D Sun Layer -->
+          <div class="volume-sun-glow"></div>
+          <div class="volume-sun">
+            <div class="sun-ray r1"></div>
+            <div class="sun-ray r2"></div>
+            <div class="sun-ray r3"></div>
+            <div class="sun-ray r4"></div>
+            <div class="sun-ray r5"></div>
+            <div class="sun-ray r6"></div>
+            <div class="sun-ray r7"></div>
+            <div class="sun-ray r8"></div>
+          </div>
+          <!-- 3D Cloud Layer -->
+          <div class="volume-cloud">
+            <div class="cloud-puff active-puff-1"></div>
+            <div class="cloud-puff active-puff-2"></div>
+            <div class="cloud-puff active-puff-3"></div>
+            <div class="cloud-shadow"></div>
+          </div>
+          <!-- Raindrops Drops Layer -->
+          <div class="volume-rain">
+            <div class="rain-drop d1"></div>
+            <div class="rain-drop d2"></div>
+            <div class="rain-drop d3"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Text & CTA Button -->
+      <div class="welcome-content-box" id="welcome-info-panel">
+        <div class="welcome-header">
+          <div class="brand-logo-badge" id="logo-badge">
+            <!-- Wind Logo Icon SVG -->
+            <svg class="wind-logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 40H60C65.5228 40 70 35.5228 70 30C70 24.4772 65.5228 20 60 20C54.4772 20 50 24.4772 50 30" stroke="#00E65B" stroke-width="8" stroke-linecap="round"/>
+              <path d="M15 55H75C80.5228 55 85 50.5228 85 45C85 39.4772 80.5228 35 75 35C69.4772 35 65 39.4772 65 45" stroke="#00E65B" stroke-width="8" stroke-linecap="round"/>
+              <path d="M25 70H50C55.5228 70 60 65.5228 60 60C60 54.4772 55.5228 50 50 50C44.4772 50 40 54.4772 40 60" stroke="#00E65B" stroke-width="8" stroke-linecap="round"/>
+              <!-- Motion circles -->
+              <circle cx="12" cy="40" r="4" fill="#00E65B"/>
+              <circle cx="8" cy="55" r="4" fill="#00E65B"/>
+              <circle cx="17" cy="70" r="4" fill="#00E65B"/>
+            </svg>
+          </div>
+          <div class="welcome-titles">
+            <h2 class="welcome-subtitle" id="txt-forecast">Forecast</h2>
+            <h1 class="welcome-main-title" id="txt-weather-apps">Weather Apps</h1>
+            <p class="welcome-tagline" id="txt-weather-app-subtitle">Weather App</p>
+          </div>
+        </div>
+        <button class="btn-primary" id="btn-get-started">Get Started</button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Wrapper for Main Application Screens (Pages 2, 3, 4, 5 share this sidebar view) -->
+  <div id="app-container" class="app-layout hidden">
+    
+    <!-- Left Sidebar: Unified App Navigation (Pages 2-4 Persistent) -->
+    <nav class="sidebar" id="app-sidebar">
+      <div class="sidebar-logo-container" id="sidebar-logo">
+        <svg class="wind-logo-svg small" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M25 40H60C65.5228 40 70 35.5228 70 30C70 24.4772 65.5228 20 60 20C54.4772 20 50 24.4772 50 30" stroke="#00E65B" stroke-width="8" stroke-linecap="round"/>
+          <path d="M20 55H75C80.5228 55 85 50.5228 85 45C85 39.4772 80.5228 35 75 35C69.4772 35 65 39.4772 65 45" stroke="#00E65B" stroke-width="8" stroke-linecap="round"/>
+          <path d="M30 70H50C55.5228 70 60 65.5228 60 60C60 54.4772 55.5228 50 50 50C44.4772 50 40 54.4772 40 60" stroke="#00E65B" stroke-width="8" stroke-linecap="round"/>
+          <circle cx="15" cy="40" r="3" fill="#00E65B"/>
+          <circle cx="10" cy="55" r="3" fill="#00E65B"/>
+          <circle cx="20" cy="70" r="3" fill="#00E65B"/>
+        </svg>
+      </div>
+
+      <div class="sidebar-menu" id="nav-menu">
+        <!-- Weather Navigation Button -->
+        <button class="nav-item active" id="nav-weather" data-tab="weather">
+          <div class="nav-icon-box">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17.5 19A3.5 3.5 0 0 0 21 15.5c0-2.79-2.54-4.5-5-4.5-.42-1.89-1.78-3.5-3.5-4-2.22-.65-4.56.32-5.5 2.25A6 6 0 0 0 2 15a3.5 3.5 0 0 0 3.5 3.5h12z"/>
+            </svg>
+          </div>
+          <span class="nav-label">Weather</span>
+        </button>
+
+        <!-- Map Navigation Button -->
+        <button class="nav-item" id="nav-map" data-tab="map">
+          <div class="nav-icon-box">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+              <line x1="9" y1="3" x2="9" y2="18"/>
+              <line x1="15" y1="6" x2="15" y2="21"/>
+            </svg>
+          </div>
+          <span class="nav-label">Map</span>
+        </button>
+
+        <!-- Fit Guide Navigation Button -->
+        <button class="nav-item" id="nav-fit" data-tab="fit">
+          <div class="nav-icon-box">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 21a6 6 0 0 0-12 0"/>
+              <circle cx="12" cy="10" r="4"/>
+              <path d="M12 2v2M12 18v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+            </svg>
+          </div>
+          <span class="nav-label">Fit Guide</span>
+        </button>
+
+        <!-- Exit Navigation Button -->
+        <button class="nav-item" id="nav-exit" data-tab="exit">
+          <div class="nav-icon-box">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8"/>
+              <polyline points="10 17 15 12 10 7"/>
+              <line x1="15" y1="12" x2="21" y2="12"/>
+            </svg>
+          </div>
+          <span class="nav-label">Exit</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main View Section -->
+    <main class="main-content-viewport" id="viewport-container">
+
+      <!-- ==================== SUB-VIEW 1: WEATHER DASHBOARD (Page 2) ==================== -->
+      <section id="view-weather-dashboard" class="sub-view">
+        <div class="dashboard-grid">
+          
+          <!-- Top Row: Location Display and Search Bar -->
+          <div class="weather-header-row" id="dashboard-header">
+            <div class="location-banner-badge" id="location-selector-trigger">
+              <div class="location-icon-container">
+                <svg viewBox="0 0 24 24" fill="none" class="badge-icon green-icon" stroke="currentColor" stroke-width="2.5">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
+              <span class="location-name-text" id="active-location-name">Johannesburg, ZA</span>
+              <div class="hamburger-menu-btn" id="cities-menu-toggle">
+                <svg viewBox="0 0 24 24" fill="none" class="badge-icon green-icon" stroke="currentColor" stroke-width="3">
+                  <line x1="3" y1="12" x2="21" y2="12"></line>
+                  <line x1="3" y1="6" x2="21" y2="6"></line>
+                  <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Quick Search Input inside Dashboard -->
+            <div class="dashboard-search shadow-glow">
+              <svg class="search-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" class="search-input-field" placeholder="Search cities (e.g. Madrid, London, Diepkloof...)" id="dashboard-search-input">
+              <button class="search-execution-btn" id="db-search-btn">Search</button>
+            </div>
+          </div>
+
+          <!-- Main Layout Split: Large Image Card & Weather Value Card with Advice -->
+          <div class="weather-content-split">
+            
+            <!-- Left Side: Large Rounded Card with Volume Illustration (Night/Rain Cloud style) -->
+            <div class="scenic-art-card" id="large-art-card-container">
+              <div class="scenic-illustration large-scale">
+                <!-- 3D Crescent Moon Layer -->
+                <div class="volume-moon">
+                  <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="glowing-moon-svg">
+                    <path d="M75 15C50 15 35 32 35 55C35 78 50 90 75 90C40 90 20 75 20 52C20 30 40 15 75 15Z" fill="#FAD02C" stroke="#F6A611" stroke-width="2"/>
+                  </svg>
+                </div>
+                <!-- 3D Cloud Layer -->
+                <div class="volume-cloud dark-atmosphere">
+                  <div class="cloud-puff active-puff-1 gray-gradient"></div>
+                  <div class="cloud-puff active-puff-2 gray-gradient"></div>
+                  <div class="cloud-puff active-puff-3 gray-gradient"></div>
+                  <div class="cloud-shadow"></div>
+                </div>
+                <!-- Rain Drops falling out -->
+                <div class="volume-rain heavy-rain">
+                  <div class="rain-drop d1 glow-blue long-rain"></div>
+                  <div class="rain-drop d2 glow-blue long-rain"></div>
+                  <div class="rain-drop d3 glow-blue long-rain font-drop"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side: Numerical Readings Panel & Multi Advice Board -->
+            <div class="weather-numeric-panel">
+              
+              <!-- Temperature Values Block -->
+              <div class="temperature-summary-card" id="temp-stat-card">
+                <div class="measurement-row">
+                  <span class="degree-digits" id="db-temp-val">21</span>
+                  <span class="degree-scale">°C</span>
+                </div>
+                <h3 class="weather-condition-title" id="db-condition-val">Sunny</h3>
+                <p class="feels-like-text" id="db-feels-like-val">Feels like 21°C</p>
+                <div class="view-detail-hint" id="trigger-detail-flow">
+                  <span>View 7-Day Forecast & Hourly Readings</span>
+                  <svg viewBox="0 0 24 24" fill="none" class="arrow-right-icon" stroke="currentColor" stroke-width="3">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 5"></polyline>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Today's Advice Segment -->
+              <div class="advice-segment-container" id="lifestyle-advice-box">
+                <h4 class="advice-segment-title">Today’s Advice</h4>
+                
+                <div class="advice-card-list">
+                  <!-- Advice Item 1: What to wear -->
+                  <div class="advice-card-item hover-translate" id="advice-jacket">
+                    <div class="advice-icon-sphere bg-green-accent">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="advice-vector">
+                        <path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.62 2V12a8 8 0 0 0 1.95 5.24l7.15 6.22a1 1 0 0 0 1.8 0l7.15-6.22A8 8 0 0 0 22 12V5.5a2 2 0 0 0-1.62-2z"/>
+                        <polyline points="12 21 12 2"/>
+                      </svg>
+                    </div>
+                    <div class="advice-body">
+                      <h5 class="advice-item-headline">What to wear</h5>
+                      <p class="advice-item-description" id="adv-wear-txt">Wear a light jacket, its a bit cool outside</p>
+                    </div>
+                  </div>
+
+                  <!-- Advice Item 2: Healthy and Safety -->
+                  <div class="advice-card-item hover-translate" id="advice-safety">
+                    <div class="advice-icon-sphere bg-green-accent">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="advice-vector">
+                        <path d="M12 2A9 9 0 0 0 3 11a9 9 0 0 0 3 6.6L12 22l6-4.4A9 9 0 0 0 21 11a9 9 0 0 0-9-9z"/>
+                        <path d="M12 15a3 3 0 1 1 0-6 3 3 0 0 1+0 6z"/>
+                      </svg>
+                    </div>
+                    <div class="advice-body">
+                      <h5 class="advice-item-headline">Healthy and Safety</h5>
+                      <p class="advice-item-description" id="adv-safety-txt">Stay hydrated, use sunscreen when going outdoors</p>
+                    </div>
+                  </div>
+
+                  <!-- Advice Item 3: Activity Suggestion -->
+                  <div class="advice-card-item hover-translate" id="advice-activity">
+                    <div class="advice-icon-sphere bg-green-accent">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="advice-vector">
+                        <circle cx="12" cy="5" r="2"/>
+                        <path d="M14 9a2 2 0 0 0-2-2h0a2 2 0 0 0-2 2v4l-2 5M12 13h2l2 4"/>
+                      </svg>
+                    </div>
+                    <div class="advice-body">
+                      <h5 class="advice-item-headline">Activity Suggestion</h5>
+                      <p class="advice-item-description" id="adv-activity-txt">Great weather of a walk or outdoor activities!</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== SUB-VIEW 2: WEATHER MAP (Page 3) ==================== -->
+      <section id="view-weather-map" class="sub-view hidden">
+        <div class="map-grid">
+          
+          <!-- Top Row: Search header representing Page 3 map toolbar -->
+          <div class="map-header-row" id="map-header">
+            <div class="map-search-bar shadow-glow">
+              <svg class="search-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" class="search-input-field" placeholder="Search cities in South Africa..." id="map-search-input">
+              <button class="search-execution-btn" id="map-search-btn">Find City</button>
+            </div>
+            <div class="map-active-info-pill">
+              <span id="map-target-status">Map of South Africa Regions</span>
+            </div>
+          </div>
+
+          <!-- Interactive Content Panel Split -->
+          <div class="map-layout-split">
+            
+            <!-- Left Card: SA Map Visualizer -->
+            <div class="map-visualizer-card" id="interactive-map-wrapper">
+              
+              <!-- SVG Map representation of South Africa -->
+              <svg class="south-africa-map-svg" viewBox="0 0 850 630" xmlns="http://www.w3.org/2000/svg" id="sa-interactive-vector">
+                <defs>
+                  <filter id="glow-light" x="-10%" y="-10%" width="120%" height="120%">
+                    <feDropShadow dx="1" dy="3" stdDeviation="4" flood-color="#000000" flood-opacity="0.3"/>
+                  </filter>
+                  <linearGradient id="limpopo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#4F3841"/>
+                    <stop offset="100%" stop-color="#3A2830"/>
+                  </linearGradient>
+                  <linearGradient id="gauteng-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#EAA64F"/>
+                    <stop offset="100%" stop-color="#C7803F"/>
+                  </linearGradient>
+                  <linearGradient id="mpumalanga-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#DF7956"/>
+                    <stop offset="100%" stop-color="#BE5134"/>
+                  </linearGradient>
+                  <linearGradient id="freestate-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#807D4F"/>
+                    <stop offset="100%" stop-color="#5E5C38"/>
+                  </linearGradient>
+                  <linearGradient id="northwest-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#5C6044"/>
+                    <stop offset="100%" stop-color="#444830"/>
+                  </linearGradient>
+                  <linearGradient id="northerncape-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#7B563D"/>
+                    <stop offset="100%" stop-color="#5C3E2A"/>
+                  </linearGradient>
+                  <linearGradient id="westerncape-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#9C4444"/>
+                    <stop offset="100%" stop-color="#7B3232"/>
+                  </linearGradient>
+                  <linearGradient id="easterncape-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#96894D"/>
+                    <stop offset="100%" stop-color="#766C3C"/>
+                  </linearGradient>
+                </defs>
+
+                <!-- Map Paths (Beautiful stylized regional shapes) -->
+                <!-- Limpopo Node -->
+                <path d="M410,20 L580,20 L620,80 L620,130 L550,150 L500,165 L460,150 L410,135 Z" fill="url(#limpopo-grad)" stroke="#111" stroke-width="1.5" class="map-provincial-region" filter="url(#glow-light)"/>
+                <!-- North-West Node -->
+                <path d="M280,180 L440,165 L450,220 L415,240 L400,265 L360,250 L315,250 Z" fill="url(#northwest-grad)" stroke="#111" stroke-width="1.5" class="map-provincial-region" filter="url(#glow-light)"/>
+                <!-- Gauteng Node (Small but highly bright) -->
+                <path d="M440,182 L470,182 L475,215 L445,215 Z" fill="url(#gauteng-grad)" stroke="#111" stroke-width="2" class="map-provincial-region active-province" filter="url(#glow-light)"/>
+                <!-- Mpumalanga Node -->
+                <path d="M480,168 L560,150 L610,140 L600,210 L560,230 L500,225 Z" fill="url(#mpumalanga-grad)" stroke="#111" stroke-width="1.5" class="map-provincial-region" filter="url(#glow-light)"/>
+                <!-- Free State Node -->
+                <path d="M351,262 L481,228 L511,268 L501,318 L461,338 L431,318 L381,318 Z" fill="url(#freestate-grad)" stroke="#111" stroke-width="1.5" class="map-provincial-region" filter="url(#glow-light)"/>
+                <!-- Northern Cape (Massive node on the left) -->
+                <path d="M120,290 L290,260 L350,265 L370,335 L390,395 L340,425 L210,425 L150,385 L120,385 Z" fill="url(#northerncape-grad)" stroke="#111" stroke-width="1.5" class="map-provincial-region" filter="url(#glow-light)"/>
+                <!-- Western Cape (Bottom left) -->
+                <path d="M141,392 L201,427 L251,427 L331,457 L301,517 L191,517 L141,452 Z" fill="url(#westerncape-grad)" stroke="#111" stroke-width="1.5" class="map-provincial-region" filter="url(#glow-light)"/>
+                <!-- Eastern Cape (Bottom middle-right) -->
+                <path d="M301,517 L331,457 L391,397 L491,387 L491,487 L441,527 L381,527 Z" fill="url(#easterncape-grad)" stroke="#111" stroke-width="1.5" class="map-provincial-region" filter="url(#glow-light)"/>
+
+                <!-- Map Typography Overlay (Provinces in original styling) -->
+                <text x="495" y="85" fill="#C9CCD8" font-size="16" letter-spacing="1.5" font-family="'Space Grotesk', sans-serif" font-weight="600" opacity="0.8">LIMPOPO</text>
+                <text x="315" y="215" fill="#9CA0B4" font-size="12" font-family="'Space Grotesk', sans-serif" opacity="0.7">NORTH-WEST</text>
+                <text x="444" y="200" fill="#FFE699" font-size="9" font-family="'Space Grotesk', sans-serif" font-weight="700">★ Pretoria</text>
+                <text x="448" y="210" fill="#FFC000" font-size="8" font-family="'Space Grotesk', sans-serif" font-weight="700">GAUTENG</text>
+                <text x="502" y="215" fill="#FFE0CC" font-size="11" font-family="'Space Grotesk', sans-serif" opacity="0.8">MPUMALANGA</text>
+                <text x="402" y="295" fill="#D3E0C2" font-size="13" font-family="'Space Grotesk', sans-serif" font-style="italic" opacity="0.8">FREE STATE</text>
+                <text x="215" y="325" fill="#A8BAC6" font-size="14" font-family="'Space Grotesk', sans-serif" opacity="0.6">NORTHERN CAPE</text>
+                <text x="202" y="465" fill="#FAC2C2" font-size="13" font-family="'Space Grotesk', sans-serif" font-weight="500">WESTERN CAPE</text>
+                <text x="368" y="485" fill="#EFDFB0" font-size="12" font-family="'Space Grotesk', sans-serif" opacity="0.7">EASTERN CAPE</text>
+
+                <!-- City indicator reference anchor points -->
+                <circle cx="460" cy="195" r="4" fill="#00E65B"/>
+                <text x="430" y="190" fill="#FFF" font-size="9">Johannesburg</text>
+                <circle cx="210" cy="485" r="4" fill="#00E65B"/>
+                <text x="180" y="480" fill="#FFF" font-size="9">Cape Town</text>
+                <circle cx="430" cy="510" r="4" fill="#00E65B"/>
+                <text x="400" y="505" fill="#FFF" font-size="9">Port Elizabeth</text>
+              </svg>
+
+              <!-- Absolute Overlay Elements representing floating City Badges (Page 3) -->
+              
+              <!-- 1. Protea Glen (27°) Badge -->
+              <div class="spot-badge badge-protea hover-scale" id="badge-city-protea">
+                <div class="spot-badge-header">
+                  <div class="spot-weather-icon sun-spin-slow">
+                    <!-- Mini Sun SVG -->
+                    <svg viewBox="0 0 24 24" class="yellow-sun-icon" fill="currentColor">
+                      <circle cx="12" cy="12" r="5"></circle>
+                      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                    </svg>
+                  </div>
+                  <span class="spot-city-name">Protea Glen</span>
+                </div>
+                <div class="spot-city-temp">27°</div>
+              </div>
+
+              <!-- 2. Dobsenville (29°) Badge -->
+              <div class="spot-badge badge-dobsen hover-scale" id="badge-city-dobsen">
+                <div class="spot-badge-header">
+                  <div class="spot-weather-icon sun-spin-slow">
+                    <svg viewBox="0 0 24 24" class="yellow-sun-icon" fill="currentColor">
+                      <circle cx="12" cy="12" r="5"></circle>
+                      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                    </svg>
+                  </div>
+                  <span class="spot-city-name">Dobsenville</span>
+                </div>
+                <div class="spot-city-temp">29°</div>
+              </div>
+
+              <!-- 3. DiepKloof (15°) Badge -->
+              <div class="spot-badge badge-diepkloof hover-scale" id="badge-city-diepkloof">
+                <div class="spot-badge-header">
+                  <div class="spot-weather-icon active-float">
+                    <!-- Cloud/Wind SVG -->
+                    <svg viewBox="0 0 24 24" class="grey-cloud-icon" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                      <path d="M3 17h6M2 14h4" stroke="#00E65B" stroke-width="1.5"/>
+                    </svg>
+                  </div>
+                  <span class="spot-city-name">DiepKloof</span>
+                </div>
+                <div class="spot-city-temp">15°</div>
+              </div>
+
+              <!-- 4. Orlando (21°) Badge -->
+              <div class="spot-badge badge-orlando hover-scale" id="badge-city-orlando">
+                <div class="spot-badge-header">
+                  <div class="spot-weather-icon moon-glow-pulse">
+                    <!-- Rain Moon SVG -->
+                    <svg viewBox="0 0 24 24" class="blue-rain-icon" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <path d="M12 2a15.3 15.3 0 0 1 4 7 15.5 15.5 0 0 1-13-2" stroke="#FFF" fill="none"/>
+                      <path d="M20 17.5a2.5 2.5 0 0 1-2.5 2.5h-10a3.5 3.5 0 0 1 0-7h.7a4.5 4.5 0 0 1 8.8.5a2.5 2.5 0 0 1 3 4z" fill="#FFF" stroke="#FFF"/>
+                      <path d="M10 18l-1 2M14 18l-1 2" stroke="#2466FF" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <span class="spot-city-name">Orlando</span>
+                </div>
+                <div class="spot-city-temp">21°</div>
+              </div>
+
+              <!-- Navigation HUD Controllers on Map overlay bottom-right -->
+              <div class="map-nav-controllers" id="map-controls">
+                <button class="hud-btn" id="map-zoom-in" title="Zoom In">+</button>
+                <div class="hud-divider"></div>
+                <button class="hud-btn" id="map-zoom-out" title="Zoom Out">-</button>
+                <button class="hud-btn highlight-hud-btn" id="map-center-arrow" title="Recenter Location">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="nav-arrow-vector">
+                    <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+                  </svg>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Right Card: City List Index of Page 3 -->
+            <div class="map-city-list-card" id="map-sidebar-list">
+              <h3 class="list-card-title">Live Node Feeds</h3>
+              
+              <div class="city-nodes-container" id="city-nodes-parent">
+                
+                <!-- Card item: Protea Glen -->
+                <div class="city-feed-row active-feed" id="feed-protea" data-city="Protea Glen">
+                  <div class="node-time">10:30</div>
+                  <div class="node-weather-badge">
+                    <svg viewBox="0 0 24 24" class="feed-sun-icon yellow-sun-icon" fill="currentColor">
+                      <circle cx="12" cy="12" r="5"></circle>
+                      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                    </svg>
+                  </div>
+                  <div class="node-details">
+                    <h4 class="node-city-title">Protea Glen</h4>
+                  </div>
+                  <div class="node-temp-summary">27°</div>
+                </div>
+
+                <!-- Card item: Dobsenville -->
+                <div class="city-feed-row" id="feed-dobsen" data-city="Dobsenville">
+                  <div class="node-time">10:23</div>
+                  <div class="node-weather-badge">
+                    <svg viewBox="0 0 24 24" class="feed-sun-icon yellow-sun-icon" fill="currentColor">
+                      <circle cx="12" cy="12" r="5"></circle>
+                      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                    </svg>
+                  </div>
+                  <div class="node-details">
+                    <h4 class="node-city-title">Dobsenville</h4>
+                  </div>
+                  <div class="node-temp-summary">29°</div>
+                </div>
+
+                <!-- Card item: Orlando -->
+                <div class="city-feed-row" id="feed-orlando" data-city="Orlando">
+                  <div class="node-time">10:24</div>
+                  <div class="node-weather-badge">
+                    <svg viewBox="0 0 24 24" class="feed-rain-icon active-float" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <path d="M12 2a15.3 15.3 0 0 1 4 7C14 15 10 15 8 9a15.5 15.5 0 0 1-13-2" stroke="#FFF" fill="none"/>
+                      <path d="M17 12a4 4 0 0 0-4-4h-.7a7.5 7.5 0 0 0-14.6 1.5A4 4 0 0 0 2 12a4 4 0 0 0 3 .5h10a4 4 0 0 0 2-4z"/>
+                      <path d="M8 14v4M12 14v4" stroke="#00C2FF" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <div class="node-details">
+                    <h4 class="node-city-title">Orlando</h4>
+                  </div>
+                  <div class="node-temp-summary">21°</div>
+                </div>
+
+                <!-- Card item: DiepKloof -->
+                <div class="city-feed-row" id="feed-diepkloof" data-city="Diepkloof">
+                  <div class="node-time">10:23</div>
+                  <div class="node-weather-badge">
+                    <svg viewBox="0 0 24 24" class="feed-wind-icon" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                      <path d="M12 16h6M14 13h4" stroke="#00E65B" stroke-width="2"/>
+                    </svg>
+                  </div>
+                  <div class="node-details">
+                    <h4 class="node-city-title">Diepkloof</h4>
+                  </div>
+                  <div class="node-temp-summary">15°</div>
+                </div>
+
+              </div>
+
+              <!-- Button CTA to jump to details -->
+              <button class="btn-primary" id="btn-map-forecast-link" style="margin-top: 1.5rem; width: 100%;">View Detailed Forecast</button>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== SUB-VIEW 3: DETAILED WEATHER FORECAST (Page 4) ==================== -->
+      <section id="view-weather-detail" class="sub-view hidden">
+        <div class="forecast-grid">
+          
+          <!-- Top Row: Interactive Search in Forecast -->
+          <div class="forecast-header-row" id="detail-header">
+            <div class="detailed-search-bar shadow-glow">
+              <svg class="search-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" class="search-input-field" placeholder="Search cities (e.g. Madrid, London, Johannesburg...)" id="detail-search-input">
+              <button class="search-execution-btn" id="detail-search-btn">Look Up</button>
+            </div>
+            
+            <button class="back-to-dashboard-pill" id="btn-back-to-dashboard">
+              <svg viewBox="0 0 24 24" fill="none" class="badge-icon" stroke="currentColor" stroke-width="3">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              <span>Dashboard View</span>
+            </button>
+          </div>
+
+          <!-- Body Layout: Left Side Panel of Madrid & Air conditions | Right Side 7-day forecast -->
+          <div class="forecast-layout-split">
+            
+            <div class="forecast-detail-main">
+              <!-- City Current Overview card -->
+              <div class="city-highlight-hero" id="forecast-hero-box">
+                <div class="highlight-info">
+                  <h1 class="highlight-city" id="detail-city-name">Madrid</h1>
+                  <p class="highlight-stat" id="detail-rain-chance-headline">Chance of rain: 0%</p>
+                  <div class="highlight-temperature">
+                    <span class="highlight-deg" id="detail-temp-val">31</span>
+                    <span class="highlight-symbol">°</span>
+                  </div>
+                </div>
+
+                <!-- Big Detailed Sun Art -->
+                <div class="highlight-vector-art sun-spin-slow" id="detail-icon-art">
+                  <svg viewBox="0 0 100 100" fill="currentColor" class="glowing-sun-vector">
+                    <circle cx="50" cy="50" r="22" fill="#FFC900" stroke="#FF8500" stroke-width="2"/>
+                    <!-- Rays -->
+                    <line x1="50" y1="5" x2="50" y2="15" stroke="#FFC900" stroke-width="5" stroke-linecap="round"/>
+                    <line x1="50" y1="85" x2="50" y2="95" stroke="#FFC900" stroke-width="5" stroke-linecap="round"/>
+                    <line x1="5" y1="50" x2="15" y2="50" stroke="#FFC900" stroke-width="5" stroke-linecap="round"/>
+                    <line x1="85" y1="50" x2="95" y2="50" stroke="#FFC900" stroke-width="5" stroke-linecap="round"/>
+                    <!-- Diagonals -->
+                    <line x1="18.18" y1="18.18" x2="25.25" y2="25.25" stroke="#FFC900" stroke-width="5" stroke-linecap="round"/>
+                    <line x1="74.75" y1="74.75" x2="81.82" y2="81.82" stroke="#FFC900" stroke-width="5" stroke-linecap="round"/>
+                    <line x1="18.18" y1="81.82" x2="25.25" y2="74.75" stroke="#FFC900" stroke-width="5" stroke-linecap="round"/>
+                    <line x1="74.75" y1="25.25" x2="81.82" y2="18.18" stroke="#FFC900" stroke-width="5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Hourly Today's Forecast Section (Scrollable) -->
+              <div class="hourly-forecast-card" id="hourly-card-parent">
+                <h3 class="card-part-title">Today's Forecast</h3>
+                
+                <div class="hourly-reel" id="hourly-reel-container">
+                  <!-- Hour Item: 6:00 AM -->
+                  <div class="hour-capsule" id="hc-6am">
+                    <span class="hour-time">6:00 AM</span>
+                    <div class="hour-icon active-float">
+                      <svg viewBox="0 0 24 24" class="capsule-vector dark-cloud" stroke="currentColor" fill="none" stroke-width="2">
+                        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                        <path d="m3 14 3-3"/>
+                      </svg>
+                    </div>
+                    <span class="hour-temp" id="hc-6am-temp">25°</span>
+                  </div>
+
+                  <!-- Hour Item: 9:00 AM -->
+                  <div class="hour-capsule" id="hc-9am">
+                    <span class="hour-time">9:00 AM</span>
+                    <div class="hour-icon">
+                      <svg viewBox="0 0 24 24" class="capsule-vector yellow-cloud" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2v2M19.07 4.93l-1.41 1.41M2 12h2M17.66 17.66l1.41 1.41" stroke="#FFC900"/>
+                        <path d="M18.8 13.5a4 4 0 0 1-5 5h-7a4 4 0 0 1-3.5-5.5a4.5 4.5 0 0 1 8.8-.5a4 4 0 0 1 6.7 1z" stroke="#FFF" fill="#FFF"/>
+                      </svg>
+                    </div>
+                    <span class="hour-temp" id="hc-9am-temp">28°</span>
+                  </div>
+
+                  <!-- Hour Item: 12:00 PM -->
+                  <div class="hour-capsule highlight-hour" id="hc-12pm">
+                    <span class="hour-time">12:00 PM</span>
+                    <div class="hour-icon sun-spin-slow">
+                      <svg viewBox="0 0 24 24" class="capsule-vector yellow-sun" fill="currentColor">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                      </svg>
+                    </div>
+                    <span class="hour-temp" id="hc-12pm-temp">33°</span>
+                  </div>
+
+                  <!-- Hour Item: 3:00 PM -->
+                  <div class="hour-capsule" id="hc-3pm">
+                    <span class="hour-time">3:00 PM</span>
+                    <div class="hour-icon sun-spin-slow">
+                      <svg viewBox="0 0 24 24" class="capsule-vector yellow-sun" fill="currentColor">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                      </svg>
+                    </div>
+                    <span class="hour-temp" id="hc-3pm-temp">34°</span>
+                  </div>
+
+                  <!-- Hour Item: 6:00 PM -->
+                  <div class="hour-capsule" id="hc-6pm">
+                    <span class="hour-time">6:00 PM</span>
+                    <div class="hour-icon sun-spin-slow">
+                      <svg viewBox="0 0 24 24" class="capsule-vector yellow-sun" fill="currentColor">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                      </svg>
+                    </div>
+                    <span class="hour-temp" id="hc-6pm-temp">32°</span>
+                  </div>
+
+                  <!-- Hour Item: 9:00 PM -->
+                  <div class="hour-capsule" id="hc-9pm">
+                    <span class="hour-time">9:00 PM</span>
+                    <div class="hour-icon">
+                      <svg viewBox="0 0 24 24" class="capsule-vector yellow-cloud" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18.8 13.5a4 4 0 0 1-5 5h-7a4 4 0 0 1-3.5-5.5a4.5 4.5 0 0 1 8.8-.5a4 4 0 0 1 6.7 1z" stroke="#FFF" fill="#FFF"/>
+                      </svg>
+                    </div>
+                    <span class="hour-temp" id="hc-9pm-temp">30°</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Air Conditions Dashboard Card (Page 4) -->
+              <div class="air-conditions-card" id="air-conditions-box">
+                <div class="air-header">
+                  <h3 class="card-part-title">Air Conditions</h3>
+                  <button class="btn-see-more hover-scale" id="btn-see-more-air">See More</button>
+                </div>
+
+                <div class="conditions-grid">
+                  <!-- Cond 1: Real Feel -->
+                  <div class="condition-cell" id="cell-realfeel">
+                    <div class="cell-icon-sphere">
+                      <svg viewBox="0 0 24 24" fill="none" class="condition-vector grey-vector" stroke="currentColor" stroke-width="2">
+                        <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/>
+                      </svg>
+                    </div>
+                    <div class="cell-readout">
+                      <span class="cell-label">Real Feel</span>
+                      <strong class="cell-val" id="cond-realfeel-val">30°</strong>
+                    </div>
+                  </div>
+
+                  <!-- Cond 2: Wind Speed -->
+                  <div class="condition-cell" id="cell-wind">
+                    <div class="cell-icon-sphere">
+                      <svg viewBox="0 0 24 24" fill="none" class="condition-vector grey-vector" stroke="currentColor" stroke-width="2">
+                        <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/>
+                      </svg>
+                    </div>
+                    <div class="cell-readout">
+                      <span class="cell-label">Wind</span>
+                      <strong class="cell-val" id="cond-wind-val">0.2 Km/h</strong>
+                    </div>
+                  </div>
+
+                  <!-- Cond 3: Chance of Rain -->
+                  <div class="condition-cell" id="cell-rain">
+                    <div class="cell-icon-sphere">
+                      <svg viewBox="0 0 24 24" fill="none" class="condition-vector grey-vector" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22a7 7 0 0 0 7-7c0-4.3-7-11-7-11S5 10.7 5 15a7 7 0 0 0 7 7z"/>
+                      </svg>
+                    </div>
+                    <div class="cell-readout">
+                      <span class="cell-label">Chance of rain</span>
+                      <strong class="cell-val" id="cond-rain-val">0%</strong>
+                    </div>
+                  </div>
+
+                  <!-- Cond 4: UV Index -->
+                  <div class="condition-cell" id="cell-uv">
+                    <div class="cell-icon-sphere">
+                      <svg viewBox="0 0 24 24" fill="none" class="condition-vector grey-vector" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                      </svg>
+                    </div>
+                    <div class="cell-readout">
+                      <span class="cell-label">UV Index</span>
+                      <strong class="cell-val" id="cond-uv-val">3</strong>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Right Column Panel: 7-Day Forecast Card -->
+            <div class="forecast-seven-day" id="seven-day-forecast-box">
+              <h3 class="card-part-title-heavy">7-Day ForeCast</h3>
+
+              <div class="forecast-table" id="forecast-table-body">
+                <!-- Row template (Madrid defaults) -->
+                <!-- Day 1: Today -->
+                <div class="forecast-table-row">
+                  <span class="forecast-day">Today</span>
+                  <div class="forecast-status-box">
+                    <div class="forecast-row-icon sun-spin-slow">
+                      <svg viewBox="0 0 24 24" class="yellow-sun-icon micro-vector" fill="currentColor">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                      </svg>
+                    </div>
+                    <span class="forecast-desc-label">Sunny</span>
+                  </div>
+                  <div class="forecast-temp-range">
+                    <strong class="temp-high">36</strong>
+                    <span class="temp-slash">/</span>
+                    <span class="temp-low">22</span>
+                  </div>
+                </div>
+
+                <!-- Day 2: Tue -->
+                <div class="forecast-table-row">
+                  <span class="forecast-day">Tue</span>
+                  <div class="forecast-status-box">
+                    <div class="forecast-row-icon sun-spin-slow">
+                      <svg viewBox="0 0 24 24" class="yellow-sun-icon micro-vector" fill="currentColor">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <path d="M12 2v2M12 20v24M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41"/>
+                      </svg>
+                    </div>
+                    <span class="forecast-desc-label">Sunny</span>
+                  </div>
+                  <div class="forecast-temp-range">
+                    <strong class="temp-high">37</strong>
+                    <span class="temp-slash">/</span>
+                    <span class="temp-low">21</span>
+                  </div>
+                </div>
+
+                <!-- Day 3: Wed -->
+                <div class="forecast-table-row">
+                  <span class="forecast-day">Wed</span>
+                  <div class="forecast-status-box">
+                    <div class="forecast-row-icon sun-spin-slow">
+                      <svg viewBox="0 0 24 24" class="yellow-sun-icon micro-vector" fill="currentColor">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                      </svg>
+                    </div>
+                    <span class="forecast-desc-label">Sunny</span>
+                  </div>
+                  <div class="forecast-temp-range">
+                    <strong class="temp-high">37</strong>
+                    <span class="temp-slash">/</span>
+                    <span class="temp-low">21</span>
+                  </div>
+                </div>
+
+                <!-- Day 4: Thu -->
+                <div class="forecast-table-row">
+                  <span class="forecast-day">Thu</span>
+                  <div class="forecast-status-box">
+                    <div class="forecast-row-icon active-float">
+                      <svg viewBox="0 0 24 24" class="grey-cloud-icon micro-vector" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                        <path d="M3 14l3-3" stroke="#00E65B" stroke-width="1.5"/>
+                      </svg>
+                    </div>
+                    <span class="forecast-desc-label">Cloudy</span>
+                  </div>
+                  <div class="forecast-temp-range">
+                    <strong class="temp-high">37</strong>
+                    <span class="temp-slash">/</span>
+                    <span class="temp-low">21</span>
+                  </div>
+                </div>
+
+                <!-- Day 5: Fri -->
+                <div class="forecast-table-row">
+                  <span class="forecast-day">Fri</span>
+                  <div class="forecast-status-box">
+                    <div class="forecast-row-icon active-float">
+                      <svg viewBox="0 0 24 24" class="grey-cloud-icon micro-vector" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                        <path d="M3 14l3-3" stroke="#00E65B" stroke-width="1.5"/>
+                      </svg>
+                    </div>
+                    <span class="forecast-desc-label">Cloudy</span>
+                  </div>
+                  <div class="forecast-temp-range">
+                    <strong class="temp-high">37</strong>
+                    <span class="temp-slash">/</span>
+                    <span class="temp-low">21</span>
+                  </div>
+                </div>
+
+                <!-- Day 6: Sat -->
+                <div class="forecast-table-row">
+                  <span class="forecast-day">Sat</span>
+                  <div class="forecast-status-box">
+                    <div class="forecast-row-icon moon-glow-pulse">
+                      <svg viewBox="0 0 24 24" class="blue-rain-icon micro-vector" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 2a15.3 15.3 0 0 1 4 7 15.5 15.5 0 0 1-13-2" stroke="#FFF" fill="none"/>
+                        <path d="M20 17.5A2.5 2.5 0 0 1 17.5 20h-10a3.5 3.5 0 0 1 0-7h.7a4.5 4.5 0 0 1 8.8.5 2.5 2.5 0 0 1 3 4z" stroke="#FFF" fill="#FFF"/>
+                        <path d="M10 18l-1 2M14 18l-1 2" stroke="#2466FF" stroke-width="2.5" stroke-linecap="round"/>
+                      </svg>
+                    </div>
+                    <span class="forecast-desc-label">Rainy</span>
+                  </div>
+                  <div class="forecast-temp-range">
+                    <strong class="temp-high">37</strong>
+                    <span class="temp-slash">/</span>
+                    <span class="temp-low">21</span>
+                  </div>
+                </div>
+
+                <!-- Day 7: Sun -->
+                <div class="forecast-table-row">
+                  <span class="forecast-day">Sun</span>
+                  <div class="forecast-status-box">
+                    <div class="forecast-row-icon active-bounce">
+                      <svg viewBox="0 0 24 24" class="dark-storm-icon micro-vector" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 17.5A2.5 2.5 0 0 1 17.5 20h-10a3.5 3.5 0 0 1 0-7H8.2a4.5 4.5 0 0 1 8.8.5 2.5 2.5 0 0 1 3 4z" fill="#333"/>
+                        <path d="M13 18l-2 3h4l-2 3" stroke="#FFC900" stroke-width="2.5" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <span class="forecast-desc-label">Storm</span>
+                  </div>
+                  <div class="forecast-temp-range">
+                    <strong class="temp-high">37</strong>
+                    <span class="temp-slash">/</span>
+                    <span class="temp-low">21</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== SUB-VIEW 4: FIT GUIDE EXTRA DETAIL (Expanded Page 2) ==================== -->
+      <section id="view-fit-guide" class="sub-view hidden">
+        <div class="fit-grid">
+          
+          <div class="fit-header-row">
+            <div>
+              <h1 class="fit-title" id="fit-city-title">Fit & Lifestyle Planner</h1>
+              <p class="fit-subtitle" id="fit-city-status">Specialized clothing, wellness, and activity suggestions for Johannesburg</p>
+            </div>
+            
+            <div class="weather-current-badge shadow-glow">
+              <span id="fit-current-badge-temp">21°C</span>
+              <span id="fit-current-badge-desc">Sunny</span>
+            </div>
+          </div>
+
+          <!-- Bento Grid Layout for Fit Guide -->
+          <div class="fit-bento-layout">
+            
+            <!-- Cell 1: Custom Avatar clothing visual selector -->
+            <div class="bento-tile bento-wear animated-entrance" id="bento-card-avatar">
+              <h3 class="tile-title">Recommended Outfit</h3>
+              <div class="wear-visual-avatar">
+                <!-- Dynamic HTML elements styled with CSS to represent clothing items -->
+                <div class="clothing-avatar-doll">
+                  <!-- Torso and head representing the person -->
+                  <div class="avatar-head"></div>
+                  <!-- The dynamic recommended shirt/jacket -->
+                  <div class="avatar-torso" id="dynamic-avatar-torso">
+                    <div class="avatar-sleeves"></div>
+                  </div>
+                  <div class="avatar-legs" id="dynamic-avatar-legs"></div>
+                  <div class="avatar-accessory" id="dynamic-avatar-acc"></div>
+                </div>
+              </div>
+              <p class="avatar-wear-desc" id="planner-outfit-desc">A lightweight breathable shell and chinos are ideal for this climate.</p>
+            </div>
+
+            <!-- Cell 2: Specific warnings and index meters -->
+            <div class="bento-tile bento-stats" id="bento-card-metrics">
+              <h3 class="tile-title">Health Indexes</h3>
+              
+              <div class="index-meters-container">
+                <!-- UV Index bar -->
+                <div class="meter-group">
+                  <div class="meter-header">
+                    <span>UV Radiation Protection</span>
+                    <span class="meter-badge bg-orange" id="planner-uv-meter-label">Low (3)</span>
+                  </div>
+                  <div class="gauge-bar-bg">
+                    <div class="gauge-bar-fill fill-orange" style="width: 30%;" id="planner-uv-meter-bar"></div>
+                  </div>
+                </div>
+
+                <!-- Hydration Recommendation -->
+                <div class="meter-group">
+                  <div class="meter-header">
+                    <span>Hydration Loss Risk</span>
+                    <span class="meter-badge bg-blue" id="planner-hydration-label">Moderate</span>
+                  </div>
+                  <div class="gauge-bar-bg">
+                    <div class="gauge-bar-fill fill-blue" style="width: 55%;" id="planner-hydration-bar"></div>
+                  </div>
+                </div>
+
+                <!-- Wind Chill or Heat Stress -->
+                <div class="meter-group">
+                  <div class="meter-header">
+                    <span>Thermal Stress Indicator</span>
+                    <span class="meter-badge bg-green" id="planner-thermal-label">Neutral Comfort</span>
+                  </div>
+                  <div class="gauge-bar-bg">
+                    <div class="gauge-bar-fill fill-green" style="width: 45%;" id="planner-thermal-bar"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cell 3: Workout planner list -->
+            <div class="bento-tile bento-activities" id="bento-card-list">
+              <h3 class="tile-title">Today's Fit Guide Checklist</h3>
+              
+              <ul class="activities-checklist-ul" id="planner-checklist-ul">
+                <li class="checklist-item done-item">
+                  <div class="chk-box checked">✓</div>
+                  <span class="chk-text">Outdoor Jogging in morning hours (Cool temper)</span>
+                </li>
+                <li class="checklist-item done-item">
+                  <div class="chk-box checked">✓</div>
+                  <span class="chk-text">Apply sun factor 15+ sunscreen on neck and arms</span>
+                </li>
+                <li class="checklist-item">
+                  <div class="chk-box"></div>
+                  <span class="chk-text">Bring hydration bottle 1.25L for trail safety</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== SUB-VIEW 5: EXIT / LOGGED OUT (Page 5) ==================== -->
+      <section id="view-exit-logged-out" class="sub-view hidden">
+        <div class="exit-layout-grid">
+          
+          <!-- Left Column Card: Large Doors Illustration -->
+          <div class="scenic-art-card grey-plate-color" id="door-art-card">
+            <div class="door-illustration-box">
+              <div class="perspective-door-layer">
+                <!-- Perspective Door frame and panel -->
+                <div class="door-frame">
+                  <div class="door-open-panel">
+                    <div class="door-knob"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Exit confirmation panel -->
+          <div class="exit-status-panel" id="exit-form-panel">
+            <div class="exit-status-badge">
+              <svg viewBox="0 0 24 24" fill="none" class="door-logout-icon" stroke="currentColor" stroke-width="2.5">
+                <path d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8"/>
+                <polyline points="10 17 15 12 10 7"/>
+                <line x1="15" y1="12" x2="21" y2="12"/>
+              </svg>
+            </div>
+            
+            <h1 class="exit-title-text" id="txt-exit-heading">You have been logged out</h1>
+            
+            <button class="btn-primary glow-btn" id="btn-login-again">Log in Again</button>
+            
+            <a href="#" class="return-home-anchor" id="link-return-home">Return to Home</a>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Embed our JavaScript behavior -->
+  <script src="script.js" type="module"></script>
+</body>
+</html>
