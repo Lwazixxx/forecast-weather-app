@@ -1146,3 +1146,33 @@ async function fetchWeather() {
 
 // Execute the function
 fetchWeather();
+
+//geo Location API to get user's current position and fetch weather for that location
+
+// Paste your key from the screenshot here
+const API_KEY = '530dc0b48ff11cbf79bbe406b4104d82';
+const CITY = 'Johannesburg';
+
+async function getCoordinates() {
+  // PASTE THE URL HERE inside the backticks (``)
+  const geoUrl = `https://openweathermap.org/geo/1.0/direct?q=${CITY}&limit=1&appid=${API_KEY}`;
+
+  try {
+    const response = await fetch(geoUrl);
+    const data = await response.json();
+
+    // This will give you the latitude and longitude
+    if (data.length > 0) {
+      const lat = data[0].lat;
+      const lon = data[0].lon;
+      console.log(`Coordinates for ${CITY}: Lat ${lat}, Lon ${lon}`);
+    } else {
+      console.log("City not found.");
+    }
+
+  } catch (error) {
+    console.error("Error fetching coordinates:", error);
+  }
+}
+
+getCoordinates();
