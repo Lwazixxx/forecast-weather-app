@@ -1114,39 +1114,6 @@ document.addEventListener("DOMContentLoaded", () => {
   syncAllActiveCityData();
 });
 
-// Javscript Api for dynamic weather dashboard application
-
-// Replace with your actual OpenWeather API key
-const API_KEY = 'e60557cce7cbeb9ef373ce5a55b052fb';
-const CITY = 'Johannesburg';
-
-async function fetchWeather() {
-  // Construct the URL with city name and your API key
-  const url = `https://openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API_KEY}&units=metric`;
-
-  try {
-    const response = await fetch(url);
-
-    // Check if the HTTP request was successful
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    // Log helpful weather details to the console
-    console.log(`Weather in ${data.name}:`);
-    console.log(`Temperature: ${data.main.temp}°C`);
-    console.log(`Condition: ${data.weather[0].description}`);
-
-  } catch (error) {
-    console.error("Failed to fetch weather data:", error.message);
-  }
-}
-
-// Execute the function
-fetchWeather();
-
 //geo Location API to get user's current position and fetch weather for that location
 
 const API_KEY = "e60557cce7cbeb9ef373ce5a55b052fb";
@@ -1239,3 +1206,18 @@ document
   });
 
 getWeather("Johannesburg");
+
+document
+  .getElementById("btn-get-started")
+  .addEventListener("click", () => {
+
+    console.log("BUTTON WORKING!");
+
+    document
+      .getElementById("welcome-screen")
+      .classList.add("hidden");
+
+    document
+      .getElementById("app-container")
+      .classList.remove("hidden");
+  });
