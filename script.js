@@ -1149,30 +1149,52 @@ fetchWeather();
 
 //geo Location API to get user's current position and fetch weather for that location
 
-// Paste your key from the screenshot here
+// 1. Store your clean API key as a variable
 const API_KEY = '530dc0b48ff11cbf79bbe406b4104d82';
-const CITY = 'Johannesburg';
 
-async function getCoordinates() {
-  // PASTE THE URL HERE inside the backticks (``)
-  const geoUrl = `https://openweathermap.org/geo/1.0/direct?q=${CITY}&limit=1&appid=${API_KEY}`;
+// 2. Select your HTML elements so you can change their text later
+const temperatureDegree = document.querySelector('.degree');
+const temperatureDescription = document.querySelector('.description');
 
-  try {
-    const response = await fetch(geoUrl);
-    const data = await response.json();
+const getLocation = () => {
+  // Check if the browser supports geolocation
+  if (navigator.geolocation) {
 
-    // This will give you the latitude and longitude
-    if (data.length > 0) {
-      const lat = data[0].lat;
-      const lon = data[0].lon;
-      console.log(`Coordinates for ${CITY}: Lat ${lat}, Lon ${lon}`);
-    } else {
-      console.log("City not found.");
-    }
+    navigator.geolocation.getCurrentPosition(position => {
+      // Extract coordinates and assign them cleanly
+      const lat = position.coords.latitude;
+      const long = position.coords.longitude;
 
-  } catch (error) {
-    console.error("Error fetching coordinates:", error);
+      // Construct the URL (Using HTTPS and removing the internal spaces/quotes)
+      const api = `https://openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=imperial&appid=${API_KEY}`;
+
+      // Fetch the data from OpenWeather
+      fetch(api)
+        .then(resp => {
+          if (!resp.ok) throw new Error("Key not active yet or network issue");
+          return resp.json();
+        })
+        .then(data => {
+          // Destructure the data object smoothly
+          const { feels_like, temp } = data.main;
+
+          // Update your DOM elements on the screen
+          temperatureDegree.textContent = `${Math.round(temp)}°F`;
+          temperatureDescription.textContent = `Feels Like ${Math.round(feels_like)}°F`;
+        })
+        .catch(err => {
+          console.error("Error fetching weather:", err);
+          temperatureDescription.textContent = "Weather activation pending...";
+        });
+    });
+
+  } else {
+    // Fallback if the browser blocks or doesn't support geolocation
+    temperatureDescription.textContent = "Please enable location to get weather";
   }
 }
 
-getCoordinates();
+// 3. Fire the function
+getLocation();
+
+
