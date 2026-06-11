@@ -1149,52 +1149,93 @@ fetchWeather();
 
 //geo Location API to get user's current position and fetch weather for that location
 
-// 1. Store your clean API key as a variable
-const API_KEY = '530dc0b48ff11cbf79bbe406b4104d82';
+const API_KEY = "e60557cce7cbeb9ef373ce5a55b052fb";
 
-// 2. Select your HTML elements so you can change their text later
-const temperatureDegree = document.querySelector('.degree');
-const temperatureDescription = document.querySelector('.description');
+async function getWeather(city) {
+  try {
 
-const getLocation = () => {
-  // Check if the browser supports geolocation
-  if (navigator.geolocation) {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+    );
 
-    navigator.geolocation.getCurrentPosition(position => {
-      // Extract coordinates and assign them cleanly
-      const lat = position.coords.latitude;
-      const long = position.coords.longitude;
+    const data = await response.json();
 
-      // Construct the URL (Using HTTPS and removing the internal spaces/quotes)
-      const api = `https://openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=imperial&appid=${API_KEY}`;
+    if (data.cod !== 200) {
+      alert("City not found");
+      return;
+    }
 
-      // Fetch the data from OpenWeather
-      fetch(api)
-        .then(resp => {
-          if (!resp.ok) throw new Error("Key not active yet or network issue");
-          return resp.json();
-        })
-        .then(data => {
-          // Destructure the data object smoothly
-          const { feels_like, temp } = data.main;
+    document.getElementById("active-location-name").textContent =
+      `${data.name}, ${data.sys.country}`;
 
-          // Update your DOM elements on the screen
-          temperatureDegree.textContent = `${Math.round(temp)}°F`;
-          temperatureDescription.textContent = `Feels Like ${Math.round(feels_like)}°F`;
-        })
-        .catch(err => {
-          console.error("Error fetching weather:", err);
-          temperatureDescription.textContent = "Weather activation pending...";
-        });
-    });
+    document.getElementById("db-temp-val").textContent =
+      Math.round(data.main.temp);
 
-  } else {
-    // Fallback if the browser blocks or doesn't support geolocation
-    temperatureDescription.textContent = "Please enable location to get weather";
+    document.getElementById("db-condition-val").textContent =
+      data.weather[0].main;
+
+    document.getElementById("db-feels-like-val").textContent =
+      `Feels like ${Math.round(data.main.feels_like)}°C`;
+
+    updateAdvice(data.main.temp);
+
+  } catch (error) {
+    console.error(error);
+    alert("Unable to load weather data");
   }
 }
 
-// 3. Fire the function
-getLocation();
+function updateAdvice(temp) {
 
+  const wear = document.getElementById("adv-wear-txt");
+  const safety = document.getElementById("adv-safety-txt");
+  const activity = document.getElementById("adv-activity-txt");
 
+  if (temp < 15) {
+
+    wear.textContent =
+      "Wear a warm jacket and long pants.";
+
+    safety.textContent =
+      "Cold weather. Keep warm and stay dry.";
+
+    activity.textContent =
+      "Good day for indoor activities.";
+
+  } else if (temp < 25) {
+
+    wear.textContent =
+      "Wear a light jacket or comfortable clothing.";
+
+    safety.textContent =
+      "Stay hydrated throughout the day.";
+
+    activity.textContent =
+      "Perfect weather for a walk outdoors.";
+
+  } else {
+
+    wear.textContent =
+      "Wear light clothing and a hat.";
+
+    safety.textContent =
+      "Use sunscreen and drink water.";
+
+    activity.textContent =
+      "Great weather for outdoor activities.";
+  }
+}
+
+document
+  .getElementById("db-search-btn")
+  .addEventListener("click", () => {
+
+    const city =
+      document.getElementById("dashboard-search-input").value.trim();
+
+    if (city) {
+      getWeather(city);
+    }
+  });
+
+getWeather("Johannesburg");
