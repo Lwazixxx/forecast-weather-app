@@ -1221,3 +1221,78 @@ document
       .getElementById("app-container")
       .classList.remove("hidden");
   });
+
+function loadMap() {
+
+  if (!navigator.geolocation) {
+
+    alert("Geolocation is not supported.");
+
+    return;
+
+  }
+
+  navigator.geolocation.getCurrentPosition(
+
+    (position) => {
+
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      const map = L.map("map").setView([lat, lon], 13);
+
+      L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          attribution: "&copy; OpenStreetMap"
+        }
+      ).addTo(map);
+
+      L.marker([lat, lon])
+        .addTo(map)
+        .bindPopup("Your Current Location")
+        .openPopup();
+
+    },
+
+    () => {
+
+      alert("Location permission denied.");
+
+    }
+
+  );
+
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+  const city = "Johannesburg";
+
+  const geocodingUrl =
+    `https://geocoding-api.open-meteo.com/v1/search?name=${city}`;
+
+  const baseWeatherUrl =
+    "https://api.open-meteo.com/v1/forecast?daily=sunrise,sunset&hourly=temperature_2m,rain,visibility,is_day,sunshine_duration,weather_code&timezone=Africa/Johannesburg&forecast_days=1";
+
+  const location = await fetch(geocodingUrl).then((response) =>
+    response.json(),
+  );
+
+  console.log({ location });
+
+  if (location.results.length > 0) {
+
+    const { latitude, longitude } = location.results[0];
+
+    const weatherUrl =
+      `${baseWeatherUrl}&latitude=${latitude}&longitude=${longitude}`;
+
+    const weather = await fetch(weatherUrl).then((response) =>
+      response.json()
+    );
+
+    console.log({ weatherUrl, weather });
+  }
+
+});
